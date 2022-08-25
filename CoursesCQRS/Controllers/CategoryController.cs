@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesCQRS.API.Controllers
 {
+  [Authorize(Roles ="Admin")]
   public class CategorysController : ControllerBase
   {
     private readonly IMediator mediator;
@@ -24,7 +25,7 @@ namespace CoursesCQRS.API.Controllers
 
     [Route("~/api/Categories/PostCategory")]
     [HttpPost]
-    [Authorize]
+  
     public async Task<IActionResult> PostCategory([FromBody]CreateCategoryCommand command)
     {
       try

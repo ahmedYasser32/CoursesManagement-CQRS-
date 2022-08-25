@@ -8,7 +8,7 @@ namespace CoursesCQRS.Application.Features.CourseFeature.Commands.Delete
 {
   public class DeleteCourseCommand:  IRequest<int>
   {
-    public int Id { get; set; }
+    public int Id { get; set; } 
   }
 
 

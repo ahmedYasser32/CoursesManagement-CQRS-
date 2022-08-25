@@ -6,6 +6,7 @@ using CoursesCQRS.Application.Features.CourseFeature.Models;
 using CoursesCQRS.Application.Features.CourseFeature.Queries;
 using CoursesCQRS.Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoursesCQRS.API.Controllers
@@ -14,6 +15,7 @@ namespace CoursesCQRS.API.Controllers
   {
     private readonly IMediator mediator;
     private readonly ApplicationContext db;
+
 
     public CoursesController(IMediator mediator, ApplicationContext db)
     {
@@ -25,7 +27,7 @@ namespace CoursesCQRS.API.Controllers
 
     [Route("~/api/teachers/PostCourse")]
     [HttpPost]
-    // [Authorize]
+    // 
     public async Task<IActionResult> PostCourse([FromBody] CreateCourseCommand command)
     {
 
@@ -64,6 +66,7 @@ namespace CoursesCQRS.API.Controllers
 
     [Route("~/api/courses/GetCourse")]
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetCourse(GetCourseQuery  query)
     {
     

@@ -52,6 +52,7 @@ namespace CoursesCQRS.API.Controllers
 
       }
     }
+
       [HttpPost]
 
       [Route("~/api/accounts/login")]
@@ -68,6 +69,12 @@ namespace CoursesCQRS.API.Controllers
 
 
       }
-    }
+  
+  
+  
+  
+  
+  
+  }
   }
 

@@ -18,15 +18,20 @@ using CoursesCQRS.Application.Features.TeacherFeature.Commands.Update;
 using CoursesCQRS.Application.Features.StudentFeature.Commands.Create;
 using CoursesCQRS.Application;
 using CoursesCQRS.Infrastructure.Extend;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//Add configuration services of the application layer
+builder.Services.AddApplicationServices();
+
 builder.Services.AddSwaggerGen(c =>
 {
   c.SwaggerDoc("v1", new OpenApiInfo
@@ -62,14 +67,20 @@ builder.Services.AddSwaggerGen(c =>
     });
 
 });
+
+//database
 builder.Services.AddDbContext<ApplicationContext>(
       options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection"))
       );
 
+//Identity addition Must be in the same order!
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationContext>()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider); //to create token for forget password
 
+  
+//Identity configuration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
   // Password settings.
@@ -93,15 +104,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 }).AddEntityFrameworkStores<ApplicationContext>();
 
-builder.Services.AddApplicationServices();
 
 //builder.Services.AddIdentityServer()
 //    .AddApiAuthorization<ApplicationUser, ApplicationContext>();
+
+//Add JWT authentication and configure it
 
 builder.Services.AddAuthentication(x =>
 {
   x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
   x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
 }).AddJwtBearer(o =>
 
 {
@@ -119,6 +132,14 @@ builder.Services.AddAuthentication(x =>
 
   };
 });
+builder.Services.Configure<JwtBearerOptions>(IdentityServerJwtConstants.IdentityServerJwtBearerScheme,
+    options => options.TokenValidationParameters = new TokenValidationParameters());
+
+//builder.Services.AddAuthorization(options =>
+//{
+//  options.AddPolicy("RequireAdministratorRole",
+//       policy => policy.RequireRole("Admin"));
+//});
 
 //builder.Services.AddMediatR(Assembly.GetExecutingAssembly(),typeof(CreateTeacherCommand).Assembly,typeof(UpdateTeacherCommand).Assembly,typeof(CreateStudentCommand).Assembly);
 //builder.Services.add(Assembly.GetExecutingAssembly());
