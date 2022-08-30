@@ -27,6 +27,7 @@ namespace CoursesCQRS.Application.Features.Roles.Queries
       this.userManager = userMgr;
     }
 
+
     public async Task<RoleUsersDTO> Handle(GetAllRolesUsersQuery request, CancellationToken cancellationToken)
     {
       IdentityRole role = await roleManager.FindByIdAsync(request.RoleId);

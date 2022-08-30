@@ -16,6 +16,7 @@ namespace CoursesCQRS.Application.Features.Roles.Commands
     {
       //private readonly RoleManager<IdentityRole> roleManager;
       private readonly UserManager<ApplicationUser> userManager;
+ 
       public Handler( UserManager<ApplicationUser> userMgr )//RoleManager<IdentityRole> roleMgr)
       {
 
