@@ -29,4 +29,8 @@
     <ProjectReference Include="..\CoursesCQRS.Infrastructure\CoursesCQRS.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\Books\" />
+  </ItemGroup>
+
 </Project>

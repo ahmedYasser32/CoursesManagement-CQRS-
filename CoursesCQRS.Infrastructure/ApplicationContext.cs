@@ -21,7 +21,8 @@ namespace CoursesCQRS.Infrastructure
     public DbSet<Course> Course { get; set; }
     public DbSet<Teacher> Teacher { get; set; }
     public DbSet<Student> Student { get; set; }
-    public DbSet<Tokens> Token { get; set; }
+    public DbSet<Tokens> Token { get; set; }  
+    public DbSet<Book> Book { get; set; }
 
   }
 }

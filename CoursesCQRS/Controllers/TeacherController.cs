@@ -1,4 +1,5 @@
-﻿using CoursesCQRS.Application.Features.TeacherFeature.Commands.Create;
+﻿using CoursesCQRS.Application.Features.Books.Commands;
+using CoursesCQRS.Application.Features.TeacherFeature.Commands.Create;
 using CoursesCQRS.Application.Features.TeacherFeature.Commands.Delete;
 using CoursesCQRS.Application.Features.TeacherFeature.Commands.Update;
 using CoursesCQRS.Application.Features.TeacherFeature.Models;
@@ -92,6 +93,21 @@ namespace CoursesCQRS.API.Controllers
     {
 
       var result = await mediator.Send(new GetStudentQuery() { Id = id});
+
+      return Ok(result);
+
+
+
+    }
+    
+    [Route("~/api/courses/AddBOOK")]
+    [HttpPost]
+    public async Task<IActionResult> CreateBook([FromForm]CreateBookCommand command)
+    {
+
+      var result = await mediator.Send(command);
+      if (result == null) { return BadRequest(); }
+
 
       return Ok(result);
 

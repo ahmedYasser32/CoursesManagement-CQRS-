@@ -24,7 +24,7 @@ namespace CoursesCQRS.API.Controllers
 
     }
 
-
+     
     [Route("~/api/teachers/PostCourse")]
     [HttpPost]
     // 
